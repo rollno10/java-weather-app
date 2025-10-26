@@ -1,0 +1,44 @@
+modules = ["java-graalvm22.3"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+packages = ["jdk21"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Server"
+
+[[workflows.workflow]]
+name = "Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "export JAVA_HOME=$(dirname $(dirname $(which java))) && mvn spring-boot:run"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 37521
+externalPort = 3000
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["bash", "-c", "export JAVA_HOME=$(dirname $(dirname $(which java))) && java -jar target/weather-app-0.0.1-SNAPSHOT.jar"]
+build = ["bash", "-c", "export JAVA_HOME=$(dirname $(dirname $(which java))) && mvn clean package -DskipTests"]
