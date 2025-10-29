@@ -1,5 +1,7 @@
 package com.binarybachelor.weather_app.service;
+import com.binarybachelor.weather_app.dto.CurrentWeatherResponseDto;
 import com.binarybachelor.weather_app.dto.CurrentWeatherDto;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -7,19 +9,16 @@ import org.springframework.web.client.RestClient;
 public class  CurrentWeatherService {
 
   private final RestClient restClient;
-  private final String API_KEY;
-  private final String LAT;
-  private final String LON;
   
-  public CurrentWeatherService(RestClient.Builder restClientBuilder, String API_key, String LAT, String LON){
-    this.restClient = restClientBuilder.baseURL("https://api.weatherbit.io/v2.0").build();
-    this.API_KEY = API_key;
-    this.LAT = LAT;
-    this.LON = LON;
+  public CurrentWeatherService(RestClient.Builder restClientBuilder){
+    this.restClient = restClientBuilder.baseUrl("https://api.weatherbit.io/v2.0").build();
    }
   
 
-  public currentWeatherDto getCurrentWeather(){
-     return restClient.get().uri("/currentlat={LAT}&lon={LON}&key={API_KEY}").retrieve().body(CurrentWeatherDto.class);
+  public CurrentWeatherDto getCurrentWeather(String API_KEY, String LAT, String LON){
+    Map<String, String> params = Map.of("LAT", LAT, "LON", LON, "API_KEY", API_KEY);
+     CurrentWeatherResponseDto response = restClient.get().uri("/current?lat={LAT}&lon={LON}&key={API_KEY}",params).retrieve().body(CurrentWeatherResponseDto.class);
+
+    return response.getData().get(0);
    }
 }

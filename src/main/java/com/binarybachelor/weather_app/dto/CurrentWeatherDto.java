@@ -1,43 +1,68 @@
 package com.binarybachelor.weather_app.dto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrentWeatherDto{
   
-    private final String weather_desc;
-    private final String weather_icon;
-    private final String time_stamp;
-    private final String degree_celsius;
-    private final  String real_feel;
-    private final String wind;
-    private final String wind_gusts;
+    private double temp;
+    private double app_temp;
+    private double wind_spd;
+    private double wind_dir;
+    private Weather weather;
+    private String ob_time;
 
-    public CurrentWeatherDto(String weather_desc, String weather_icon, String time_stamp, String degree_celsius, String real_feel, String wind, String wind_gusts){
-        this.weather_desc = weather_desc;
-        this.weather_icon = weather_icon;
-        this.time_stamp = time_stamp;
-        this.degree_celsius = degree_celsius;
-        this.real_feel = real_feel;
-        this.wind = wind;
-        this.wind_gusts = wind_gusts;
+    public double getTemp(){
+        return temp;
     }
-    public String getWeather_desc() {
-        return weather_desc;
+    public void setTemp(double temp){
+        this.temp = temp;
     }
-    public String getWeather_icon() {
-        return weather_icon;
+    public double getApp_temp(){
+        return app_temp;
     }
-    public String getTime_stamp() {
-        return time_stamp;
-    }  
-    public String getDegree_celsius() {
-        return degree_celsius;
+    public void setApp_temp(double app_temp){
+        this.app_temp = app_temp;
     }
-    public String getReal_feel() {
-        return real_feel;
+    public double getWind_spd(){
+        return wind_spd;
     }
-    public String getWind() {
-        return wind;
+    public void setWind_spd(double wind_spd){
+        this.wind_spd = wind_spd;
     }
-    public String getWind_gusts(){
-        return wind_gusts;
+    public double getWind_dir(){
+        return wind_dir;
+    }
+    public void setWind_dir(double wind_dir){
+        this.wind_dir = wind_dir;
+    }
+    public Weather getWeather(){
+        return weather;
+    }
+    public void setWeather(Weather weather){
+        this.weather = weather;
+    }
+    public String getOb_time(){
+        return ob_time;
+    }
+    public void setOb_time(String ob_time){
+        this.ob_time = ob_time;
+    }
+
+    public static class  Weather{
+        private String description;
+        private String icon;
+
+        public String getDescription(){
+            return description;
+        }
+        public void setDescription(String description){
+            this.description = description;
+        }
+        public String getIcon(){
+            return icon;
+        }
+        public void setIcon(String icon){
+            this.icon = icon;
+        }
     }
 }
