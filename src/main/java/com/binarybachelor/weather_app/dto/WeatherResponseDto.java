@@ -3,14 +3,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class  CurrentWeatherResponseDto{
+public class WeatherResponseDto<T>{
 
-    private List<CurrentWeatherDto> data;
+    private List<T> data;
 
-    public void setData(List<CurrentWeatherDto> data){
+    public void setData(List<T> data){
         this.data = data;
     }
-    public List<CurrentWeatherDto> getData(){
+    public List<T> getData(){
         return data;
     }
 }
