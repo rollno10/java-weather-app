@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.binarybachelor.weather_app.dto.WeatherResponseDto;
 import com.binarybachelor.weather_app.dto.ForcastWeatherDto;
 import com.binarybachelor.weather_app.dto.GeoCodeDto;
+import com.binarybachelor.weather_app.dto.RadarMapDto;
 
 @RestController
 @RequestMapping("/api/weather")
@@ -35,5 +36,10 @@ public class WeatherController {
         GeoCodeDto geoCode = WeatherService.getGeoCode(body.get("city"));
 
         return ResponseEntity.ok(WeatherService.getForecastWeather(body.get("api_key"),geoCode.getLat(),geoCode.getLon()));
+    }
+
+    @GetMapping("/radar")
+    public ResponseEntity<RadarMapDto> getRadarMap(){
+        return ResponseEntity.ok(WeatherService.getRadarMap());
     }
 }

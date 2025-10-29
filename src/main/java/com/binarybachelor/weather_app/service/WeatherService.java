@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import com.binarybachelor.weather_app.dto.RadarMapDto;
 
 
 @Service
@@ -15,12 +16,15 @@ public class  WeatherService {
 
   private final RestClient weatherRestClient;
   private final RestClient geoCodeRestClient;
+  private final RestClient radarMapRestClient;
   
   public WeatherService(RestClient.Builder restClientBuilder){
     
     this.weatherRestClient = restClientBuilder.baseUrl("https://api.weatherbit.io/v2.0").build();
     
     this.geoCodeRestClient = restClientBuilder.baseUrl("https://geocode.maps.co").build();
+
+    this.radarMapRestClient = restClientBuilder.baseUrl("https://api.rainviewer.com/public/weather-maps.json").build();
    }
   
   public GeoCodeDto getGeoCode(String CITY){
@@ -32,6 +36,13 @@ public class  WeatherService {
       .retrieve()
       .body(typeRef);
     return response.get(0);
+  }
+
+  public RadarMapDto getRadarMap(){
+    return radarMapRestClient
+      .get()
+      .retrieve()
+      .body(RadarMapDto.class);
   }
   
 
