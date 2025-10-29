@@ -1,6 +1,8 @@
 package com.binarybachelor.weather_app.dto;
 import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class  RadarMapDto{
 
   private String host;

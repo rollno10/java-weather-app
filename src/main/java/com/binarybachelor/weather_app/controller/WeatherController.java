@@ -14,6 +14,7 @@ import com.binarybachelor.weather_app.dto.WeatherResponseDto;
 import com.binarybachelor.weather_app.dto.ForcastWeatherDto;
 import com.binarybachelor.weather_app.dto.GeoCodeDto;
 import com.binarybachelor.weather_app.dto.RadarMapDto;
+import com.binarybachelor.weather_app.dto.HourlyWeatherDto;
 
 @RestController
 @RequestMapping("/api/weather")
@@ -41,5 +42,10 @@ public class WeatherController {
     @GetMapping("/radar")
     public ResponseEntity<RadarMapDto> getRadarMap(){
         return ResponseEntity.ok(WeatherService.getRadarMap());
+    }
+
+    @GetMapping("/hourly")
+    public ResponseEntity<List<HourlyWeatherDto>> getHourlyWeather(@RequestBody Map<String,String> body){
+        return ResponseEntity.ok(WeatherService.getHourlyWeather(body.get("api_key"),body.get("city")));
     }
 }
