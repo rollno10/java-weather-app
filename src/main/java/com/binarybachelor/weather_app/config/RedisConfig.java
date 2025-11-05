@@ -32,7 +32,7 @@ public class  RedisConfig{
         ObjectMapper.DefaultTyping.NON_FINAL
     );
 
-    Jackson2JsonRedisSerializer<Object> jsonSerializer = new Jackson2JsonRedisSerializer<>(mapper, Object.class);
+    Jackson2JsonRedisSerializer<Object> jsonSerializer = new Jackson2JsonRedisSerializer<>(mapper,Object.class);
 
     // Set the value serializer to Jackson2JsonRedisSerializer
     template.setValueSerializer(jsonSerializer);
