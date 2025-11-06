@@ -10,7 +10,7 @@ public class  GeocodeApi{
 
   public GeocodeApi(RestClient.Builder restClientBuilder){
 
-    this.geoCodeRestClient = restClientBuilder.baseUrl("https://geocode.maps.co").build();
+    this.geoCodeRestClient = restClientBuilder.baseUrl("https://nominatim.openstreetmap.org").build();
     
   }
 
@@ -19,7 +19,7 @@ public class  GeocodeApi{
     ParameterizedTypeReference<List<GeoCodeDto>> typeRef = new ParameterizedTypeReference<>() {};
     List<GeoCodeDto> response =  geoCodeRestClient
       .get()
-      .uri("/search?q={CITY}",city)
+      .uri("/search?q={city}&format=json",city)
       .retrieve()
       .body(typeRef);
     return response.get(0);

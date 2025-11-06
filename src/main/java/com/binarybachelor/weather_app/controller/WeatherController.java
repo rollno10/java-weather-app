@@ -23,12 +23,17 @@ public class WeatherController {
     @Autowired    
     private WeatherService WeatherService;
 
+    @GetMapping("/geocode")
+    public ResponseEntity<GeoCodeDto> getGeoCode(@RequestBody Map<String,String> body){
+        return ResponseEntity.ok(WeatherService.getGeoCode(body.get("city")));
+    }
+
     @GetMapping("/current")
     public ResponseEntity<CurrentWeatherDto> getCurrentWeather(@RequestBody Map<String,String> body){
         
         GeoCodeDto geoCode = WeatherService.getGeoCode(body.get("city"));
 
-        return ResponseEntity.ok(WeatherService.getCurrentWeather(body.get("api_key"),geoCode.getLat(),geoCode.getLon()));
+        return ResponseEntity.ok(WeatherService.getCurrentWeather(body.get("api_key"),geoCode.getLat(),geoCode.getLon(),body.get("city")));
     }
 
     @GetMapping("/forecast")
@@ -36,7 +41,7 @@ public class WeatherController {
 
         GeoCodeDto geoCode = WeatherService.getGeoCode(body.get("city"));
 
-        return ResponseEntity.ok(WeatherService.getForecastWeather(body.get("api_key"),geoCode.getLat(),geoCode.getLon()));
+        return ResponseEntity.ok(WeatherService.getForecastWeather(body.get("api_key"),geoCode.getLat(),geoCode.getLon(),body.get("city")));
     }
 
     @GetMapping("/radar")
